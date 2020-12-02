@@ -1,0 +1,145 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+
+body {
+  background-color: #628395;
+  height: 100vh;
+  overflow-y: hidden;
+}
+
+.conve-container {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+}
+
+.conv-message-me {
+  padding: 9px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.conv-message {
+  padding: 9px;
+}
+
+.user {
+  color: rgb(219, 219, 219);
+  font-style: normal;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 2;
+}
+
+.msg {
+  display: inline-block;
+  background-color: white;
+  border-radius: 5px;
+  padding: 9px;
+  max-width: 400px;
+}
+
+.chat-form {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 5px;
+  background-color: #628395;
+}
+
+.chat-form input[type="text"] {
+  width: 90%;
+  padding: 8px;
+  margin-left: 2px;
+}
+
+.chat-form input[type="submit"] {
+  width: 9%;
+  padding: 8px;
+}
+
+.login-form {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.login-form h2 {
+  margin-bottom: 15px;
+  color: white;
+}
+
+.login-form form {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid white;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+input[type="submit"]:hover {
+  background-color: #628395;
+  color: white;
+}
+
+.login-form form input[type="text"] {
+  padding: 5px;
+  margin-bottom: 10px;
+  border: 2px solid white;
+}
+
+input[type="text"]:focus {
+  border: none;
+  outline: none;
+  border: 2px solid white;
+}
+input[type="submit"] {
+  font-size: 14px;
+  font-weight: 600;
+  background-color: white;
+  outline: none;
+  border: 1px solid white;
+  cursor: pointer;
+}
+
+.login-form form input[type="submit"] {
+  padding: 5px;
+
+  /* color: #628395; */
+}
+
+.container {
+  display: flex;
+}
+.online {
+  height: 100vh;
+  /* background-color: white; */
+  border-right: 1px solid white;
+  flex: 1;
+}
+
+.conversation {
+  /* background-color: red; */
+  position: relative;
+  flex: 3;
+}
+
+@media only screen and (max-width: 600px) {
+  .chat-form input[type="text"] {
+    width: 84%;
+    padding: 8px;
+  }
+  .chat-form input[type="submit"] {
+    width: 14%;
+    padding: 8px;
+  }
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RealTime Chat</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans" rel="stylesheet">
+</head>
+
+<body>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+
+        var user = JSON.parse(localStorage.getItem("user"));
+        var body = document.querySelector('body');
+
+        if (user) {
+
+            body.innerHTML = `
+            <div class="container">
+                <div class="online">dfds</div>
+                <div class="conversation">
+
+                    <div class="conve-container">
+                        <!--  message from others users --->
+                            <div class="conv-message">
+                                <div class="user">mon__seef: </div>
+                                <div class="msg">Wafiin adrarifkqsklf qskldfjhqskldfhqskdfhqklsfhqls kdf !!</div>
+                            </div>
+                        <!--  message from me --->
+                            <div class="conv-message-me">
+                                <div class="msg">Wafiin adrarifkqsklf qskldfjhqskldfhqskdfhqklsfhqls kdf !!</div>
+                            </div>   
+                    </div>
+                    <div class="chat-form">
+                        <form autocomplete="off" >
+                            <div class="form-input">
+                                <input name="msg" type="text" placeholder="Message">
+                                <input type="submit" value="Send">
+                            </div>
+                        </form>
+                    </div>
+                </div>    
+            </div>
+            
+        `;
+            // var form = document.querySelector('form');
+            // var socket = io();
+
+            // socket.on('joined-user', (user) => {
+            //     console.log(user);
+            //     body.innerHTML += `
+            //     <span>${user}</span>
+            // `;
+            // })
+            // socket.on('user-disconnect', (user) => {
+            //     console.log(user);
+            //     body.innerHTML += `
+            //     <span>${user} disconnected</span>
+            // `;
+            // })
+
+            // // 
+            // socket.emit('username', user);
+            // form.addEventListener('submit', (e) => {
+            //     e.preventDefault();
+            // });
+
+
+        } else {
+            body.innerHTML = `
+            <div class="login-form"> 
+                <form autocomplete="off">
+                    <h2>Login in</h2>
+                    <input type="text" placeholder="Enter ur username" name="user" />
+                    <input type="submit" value="Go chat" />
+                </form>
+            </div>
+        `;
+            var form = document.querySelector('form');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                localStorage.setItem('user', JSON.stringify(e.target.user.value));
+                document.location.reload();
+            });
+
+        }
+    </script>
+
+</body>
+
+</html>
