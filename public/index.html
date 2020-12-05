@@ -20,21 +20,17 @@
 
         if (user) {
 
-            body.innerHTML = `
+            body.innerHTML = `  
             <div class="container">
-                <div class="online">dfds</div>
+                <div class="online">
+                    <h2>Online:</h2>
+                    <ul>
+                    </ul>
+                </div>
                 <div class="conversation">
 
                     <div class="conve-container">
-                        <!--  message from others users --->
-                            <div class="conv-message">
-                                <div class="user">mon__seef: </div>
-                                <div class="msg">Wafiin adrarifkqsklf qskldfjhqskldfhqskdfhqklsfhqls kdf !!</div>
-                            </div>
-                        <!--  message from me --->
-                            <div class="conv-message-me">
-                                <div class="msg">Wafiin adrarifkqsklf qskldfjhqskldfhqskdfhqklsfhqls kdf !!</div>
-                            </div>   
+                         
                     </div>
                     <div class="chat-form">
                         <form autocomplete="off" >
@@ -48,27 +44,55 @@
             </div>
             
         `;
-            // var form = document.querySelector('form');
-            // var socket = io();
+            var form = document.querySelector('form');
+            var convForm = document.querySelector('.conve-container');
+            var onlineUsers = document.querySelector('.online > ul');
+            var socket = io({ transports: ['websocket'], upgrade: false });
 
-            // socket.on('joined-user', (user) => {
-            //     console.log(user);
-            //     body.innerHTML += `
-            //     <span>${user}</span>
-            // `;
-            // })
-            // socket.on('user-disconnect', (user) => {
-            //     console.log(user);
-            //     body.innerHTML += `
-            //     <span>${user} disconnected</span>
-            // `;
-            // })
 
-            // // 
-            // socket.emit('username', user);
-            // form.addEventListener('submit', (e) => {
-            //     e.preventDefault();
-            // });
+            socket.on("joined-user", (users) => {
+                onlineUsers.innerHTML = "";
+                users.forEach(user => {
+                    onlineUsers.innerHTML += `
+                            <li>${user.username}</li>
+                        `;
+                });
+            })
+
+            socket.on("dis-user", (msg) => {
+                console.Log(msg);
+            })
+
+
+
+
+            socket.on("sent-message", (msg) => {
+                var data = `
+                    <div class="conv-message">
+                        <div class="user">${msg.user}</div>
+                        <div class="msg">${msg.msg}</div>
+                    </div>
+                `;
+
+                convForm.innerHTML += data;
+            });
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                if (!e.target.msg.value) return;
+
+                socket.emit("send-message", { user, msg: e.target.msg.value });
+                var data = `
+                    <div class="conv-message-me">
+                        <div class="msg">${e.target.msg.value}</div>
+                    </div>
+                `;
+
+                convForm.innerHTML += data;
+                e.target.msg.value = "";
+                convForm.scrollTo(0, convForm.scrollHeight);
+
+            });
 
 
         } else {
@@ -78,16 +102,30 @@
                     <h2>Login in</h2>
                     <input type="text" placeholder="Enter ur username" name="user" />
                     <input type="submit" value="Go chat" />
+                    <span class="error" style="color: white; font-size: 14px; margin-top: 3px;"></span>
                 </form>
             </div>
         `;
+            var socket = io({ transports: ['websocket'], upgrade: false });
+
             var form = document.querySelector('form');
+            var error = document.querySelector(".error");
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
-                localStorage.setItem('user', JSON.stringify(e.target.user.value));
-                document.location.reload();
+                error.textContent = "";
+
+                socket.emit('username', e.target.user.value);
             });
 
+            socket.on("username-used", (value) => {
+                if (value) {
+                    error.textContent = "already used";
+
+                } else {
+                    localStorage.setItem('user', JSON.stringify(form.user.value));
+                    document.location.reload();
+                }
+            });
         }
     </script>
 
